@@ -452,9 +452,8 @@
   <ARTICULO CODIGO="Mie/096AR" NOMBRE="Aspirador Allergy Control 700 - Miele" PVP="95.4"/>
   <ARTICULO CODIGO="Mie/097AR" NOMBRE="Aspirador Total Care - Miele" PVP="96.3"/>
   <CLIENTE/>
-<CLIENTEPREFERENTE/>
+  <CLIENTEPREFERENTE/>
   <CODIGOPOSTAL/>
-  <DIRECCION/>
   <FESTIVO/>    
   <LINEA/>
   <LINEAANULADA/>
