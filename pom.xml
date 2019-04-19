@@ -41,13 +41,13 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/debug.jar</systemPath>
 		</dependency>
-	<!-- 	<dependency>
+		<dependency>
 			<groupId>pr9b</groupId>
 			<artifactId>pr9b</artifactId>
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/pr9b.jar</systemPath>
-		</dependency> -->
+		</dependency> 
 	</dependencies>
 	<repositories>
 		<repository>

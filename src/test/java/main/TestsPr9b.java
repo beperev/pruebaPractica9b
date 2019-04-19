@@ -1,19 +1,8 @@
-package test.java.main;
+package main;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.ReplacementTable;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -21,7 +10,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import main.java.model.ExcepcionDeAplicacion;
-import main.java.model.PedidoEnRealizacion;
 import sol.GestorBD;
 import util.TestsUtil;
 
