@@ -175,12 +175,12 @@ public class PrecioArticulo {
 	  Connection con = null;
 	  con = DriverManager.getConnection(url);
 
-	  // Primer paso. Cálculo del precio por artículo (con o sin descuento)
+	  // Primer paso. CÃ¡lculo del precio por artÃ­culo (con o sin descuento)
 
 	  String sql1 = "select PVP*(100-nvl(descuento,0))/100 from articulo " +
 			"left outer join oferta on articulo.CODIGO = oferta.CODIGOARTICULO where " +
 			"codigo = '" + codigoArticulo + "'";
-	  //Almacenará el precio por artículo (con o sin descuento)
+	  //AlmacenarÃ¡ el precio por artÃ­culo (con o sin descuento)
 	  double precioOfertaDescuento = 0;
 
 	  Statement get1 = con.createStatement();
@@ -192,7 +192,7 @@ public class PrecioArticulo {
        get1.close();
 
 
-	  //Segundo paso, calculamos el número de artículos a pagar.
+	  //Segundo paso, calculamos el nÃºmero de artÃ­culos a pagar.
 
 	  String sql2 = "select aComprar, aPagar from oferta3x2 where codigoArticulo = '"+codigoArticulo+"'";
 	  double precioTotal = 0;
@@ -211,7 +211,7 @@ public class PrecioArticulo {
         } else {
 		totalArticulosAPagar = cantidad;
 	  }
-	  //último paso. Calculamos el precio total, teniendo en cuenta el número de artículos
+	  //Ãºltimo paso. Calculamos el precio total, teniendo en cuenta el nÃºmero de artÃ­culos
        // a pagar (marcado por la oferta 3x2) y el precio de los mismos (marcado por la 
        //oferta de descuento)
 		precioTotal=totalArticulosAPagar * precioOfertaDescuento;
@@ -226,5 +226,3 @@ language java name
 'PrecioArticulo.getPrecioArticulosEnOferta (java.lang.String, int) return double';
 
 SQL
-
- 
