@@ -163,66 +163,35 @@ CREATE TABLE TransitoMercancia (
   CONSTRAINT fk_Transito_articulo FOREIGN KEY (codigoArticulo) REFERENCES Articulo (codigo));
 
 
-create or replace java source named "PrecioArticuloSrc" as
-import java.sql.*;
-import java.util.*;
-
-public class PrecioArticulo {
-	// Para su uso con el driver JDBC interno
-	private static String url = "jdbc:default:connection:";
-
-	public static double getPrecioArticulosEnOferta(String codigoArticulo, int cantidad) throws SQLException {
-	  Connection con = null;
-	  con = DriverManager.getConnection(url);
-
-	  // Primer paso. Cálculo del precio por artículo (con o sin descuento)
-
-	  String sql1 = "select PVP*(100-nvl(descuento,0))/100 from articulo " +
-			"left outer join oferta on articulo.CODIGO = oferta.CODIGOARTICULO where " +
-			"codigo = '" + codigoArticulo + "'";
-	  //Almacenará el precio por artículo (con o sin descuento)
-	  double precioOfertaDescuento = 0;
-
-	  Statement get1 = con.createStatement();
-	  ResultSet res1 = get1.executeQuery(sql1);
-	  if (res1.next()) {
-		precioOfertaDescuento = res1.getDouble(1);
-	  }
-	  res1.close();
-       get1.close();
-
-
-	  //Segundo paso, calculamos el número de artículos a pagar.
-
-	  String sql2 = "select aComprar, aPagar from oferta3x2 where codigoArticulo = '"+codigoArticulo+"'";
-	  double precioTotal = 0;
-	  int aComprar;
-	  int aPagar;
-	  int lotes;
-	  int totalArticulosAPagar;
-		
-	  Statement get2 = con.createStatement();
-	  ResultSet res2 = get2.executeQuery(sql2);
-	  if (res2.next()) {
-		aComprar = res2.getInt("aComprar");
-		aPagar = res2.getInt("aPagar");
-		lotes = cantidad / aComprar;
-		totalArticulosAPagar = lotes*aPagar + cantidad % aComprar;
-        } else {
-		totalArticulosAPagar = cantidad;
-	  }
-	  //último paso. Calculamos el precio total, teniendo en cuenta el número de artículos
-       // a pagar (marcado por la oferta 3x2) y el precio de los mismos (marcado por la 
-       //oferta de descuento)
-		precioTotal=totalArticulosAPagar * precioOfertaDescuento;
-		res2.close();
-		get2.close();
+CREATE OR REPLACE FUNCTION numeroFincasEnCiudad 
+(codigoArticulo in varchar2, cantidad in INTEGER) return NUMBER
+is
+  precioOfertaDescuento NUMBER(7, 2);
+  precioTotal NUMBER(7, 2);
+  aComprar2 NUMBER(7, 2);
+	aPagar2 NUMBER(7, 2);
+	lotes NUMBER(7, 2);
+	totalArticulosAPagar NUMBER(7, 2);
+  codigoArticulo2  varchar2(12) := codigoArticulo;
+  cursor c1 is
+   SELECT PVP*(100-nvl(descuento,0))/100 
+ from articulo left outer join oferta on articulo.CODIGO = oferta.CODIGOARTICULO where  codigo = codigoArticulo2;
+  cursor c2 is
+    select aComprar, aPagar from oferta3x2 where codigoArticulo =codigoArticulo2;
+BEGIN
+   open c1;
+   fetch c1 into precioOfertaDescuento;
+open c2;
+     FETCH c2 INTO aComprar2, aPagar2;
+     precioTotal := 0;
+    if c2%found then
+       lotes := cantidad / aComprar2;
+      totalArticulosAPagar := lotes*aPagar2 + MOD(cantidad,aComprar2);
+    else
+        totalArticulosAPagar := cantidad;
+    end if;
+		precioTotal:=totalArticulosAPagar * precioOfertaDescuento;
 		return precioTotal;
-	}
-};
-
-create or replace function PrecioArticulo(codigoArticulo VARCHAR2, cantidad NUMBER) return NUMBER as
-language java name
-'PrecioArticulo.getPrecioArticulosEnOferta (java.lang.String, int) return double';
-
+END;
+/
 SQL
