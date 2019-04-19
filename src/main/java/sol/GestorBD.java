@@ -132,7 +132,7 @@ public class GestorBD extends AbstractDBManager {
   }
 
 //  public Almacen getAlmacenDeCP(String CP) throws ExcepcionDeAplicacion {
-//    Debug.prec(CP, "Me has enviado un código postal nulo");
+//    Debug.prec(CP, "Me has enviado un codigo postal nulo");
 //    Almacen almacen = null;
 //    Statement stm = null;
 //    try {
