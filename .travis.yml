@@ -12,7 +12,6 @@ script:
  - git checkout tags/original pom.xml
  - git checkout tags/original src/test/java/main/TestsPr9b.java
  - git checkout tags/original src/test/java/util/TestsUtil.java
- - git checkout tags/original src/main/resources/META-INF/persistence.xml
  - git checkout tags/original accept_the_license_agreement_for_oracledb_xe_11g_and_install.sh
  - git checkout tags/original create_tables.sh
  - mvn package
