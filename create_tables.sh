@@ -163,7 +163,7 @@ CREATE TABLE TransitoMercancia (
   CONSTRAINT fk_Transito_articulo FOREIGN KEY (codigoArticulo) REFERENCES Articulo (codigo));
 
 
-CREATE OR REPLACE FUNCTION precioArticulo 
+CREATE OR REPLACE FUNCTION PRECIOArticulo 
 (codigoArticulo in varchar2, cantidad in INTEGER) return NUMBER
 is
   precioOfertaDescuento NUMBER(7, 2);
